@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecallRocket | Smart Learning Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div>
+        <h1>🚀 RecallRocket</h1>
+        <p>Your Personal Smart Learning Space</p>
+    </div>
+    <button id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
+</header>
+
+<nav>
+    <button onclick="showPage('home')">🏠 Home</button>
+    <button onclick="showPage('study')">📚 Study</button>
+    <button onclick="showPage('create')">➕ Create Cards</button>
+    <button onclick="showPage('quiz')">🧠 Quiz</button>
+    <button onclick="showPage('dashboard')">📊 Dashboard</button>
+</nav>
+
+<main>
+
+<!-- HOME -->
+<section id="home" class="page active">
+    <div class="hero">
+        <h2>Welcome to RecallRocket! 👋</h2>
+        <p>Learn smarter, remember longer and achieve more.</p>
+        <h3>🔥 <span id="streak">1</span> Day Learning Streak</h3>
+        <button onclick="showPage('study')">Start Learning 🚀</button>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <span>📚</span>
+            <h2 id="total">0</h2>
+            <p>Total Cards</p>
+        </div>
+        <div class="stat">
+            <span>⭐</span>
+            <h2 id="mastered">0</h2>
+            <p>Mastered</p>
+        </div>
+        <div class="stat">
+            <span>🏆</span>
+            <h2 id="xp">0</h2>
+            <p>XP Points</p>
+        </div>
+        <div class="stat">
+            <span>⏱️</span>
+            <h2 id="sessions">0</h2>
+            <p>Study Sessions</p>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>✨ Daily Motivation</h3>
+        <p id="quote">Every day is a new chance to learn!</p>
+        <button onclick="newQuote()">New Motivation</button>
+    </div>
+
+    <div class="panel">
+        <h3>🎯 Daily Learning Goal</h3>
+        <p>Master 5 flashcards today.</p>
+        <div class="progress">
+            <div id="goalBar"></div>
+        </div>
+        <p id="goalText">0 / 5 mastered</p>
+    </div>
+</section>
+
+<!-- STUDY -->
+<section id="study" class="page">
+    <h2>📚 Smart Study Room</h2>
+    <p>Flip your cards and test your memory.</p>
+
+    <div class="filters">
+        <input id="search" placeholder="🔍 Search flashcards..."
+               oninput="renderStudy()">
+
+        <select id="categoryFilter" onchange="renderStudy()">
+            <option value="all">All Categories</option>
+            <option value="HTML">HTML</option>
+            <option value="CSS">CSS</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+
+    <div class="flashcard" onclick="flipCard()">
+        <span id="cardNumber">Card 1</span>
+        <h2 id="cardContent">Question</h2>
+        <p id="flipHint">Click to reveal answer</p>
+    </div>
+
+    <div class="actions">
+        <button onclick="previousCard()">⬅ Previous</button>
+        <button onclick="nextCard()">Next ➡</button>
+    </div>
+
+    <div class="actions">
+        <button class="green" onclick="markMastered()">✓ Mastered</button>
+        <button class="orange" onclick="markRevision()">↻ Revise Again</button>
+    </div>
+
+    <p id="studyMessage" class="message"></p>
+</section>
+
+<!-- CREATE CARDS -->
+<section id="create" class="page">
+    <h2>➕ Create Your Flashcards</h2>
+    <p>Add your own questions and answers.</p>
+
+    <div class="formBox">
+        <label>Question</label>
+        <input id="question" placeholder="Enter your question">
+
+        <label>Answer</label>
+        <textarea id="answer" placeholder="Enter your answer"></textarea>
+
+        <label>Category</label>
+        <select id="category">
+            <option value="HTML">HTML</option>
+            <option value="CSS">CSS</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <button onclick="addCard()">Save Flashcard ✨</button>
+        <p id="createMessage" class="message"></p>
+    </div>
+
+    <h3>Your Saved Flashcards</h3>
+    <div id="savedCards"></div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="page">
+    <h2>🧠 Quiz Challenge</h2>
+    <p>Challenge yourself and earn XP points!</p>
+
+    <div class="panel quizBox">
+        <p id="quizCount">Ready to begin?</p>
+        <h3 id="quizQuestion">Test your knowledge!</h3>
+
+        <div id="quizOptions"></div>
+
+        <p id="quizFeedback" class="message"></p>
+
+        <button id="quizStart" onclick="startQuiz()">Start Quiz 🚀</button>
+
+        <h3 id="quizScore"></h3>
+    </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page">
+    <h2>📊 Learning Dashboard</h2>
+
+    <div class="stats">
+        <div class="stat">
+            <h2 id="dashTotal">0</h2>
+            <p>Total Cards</p>
+        </div>
+        <div class="stat">
+            <h2 id="dashMastered">0</h2>
+            <p>Mastered Cards</p>
+        </div>
+        <div class="stat">
+            <h2 id="dashXP">0</h2>
+            <p>XP Points</p>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>📈 Overall Learning Progress</h3>
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+        <h3 id="progressText">0% Completed</h3>
+    </div>
+
+    <div class="panel">
+        <h3>🏆 Achievements</h3>
+        <p id="achievement">Start learning to unlock badges!</p>
+    </div>
+
+    <div class="panel">
+        <h3>💡 Smart Learning Tip</h3>
+        <p>Revise difficult cards regularly to improve your memory.</p>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    © 2026 RecallRocket | Learn • Practice • Achieve 🚀
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+
